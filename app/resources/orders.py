@@ -66,3 +66,23 @@ class Order(Resource):
         orders.append(order)
         return order, 201
 
+    """ Function to update the status of a specific order method """
+
+    def put(self, order_id):
+
+        data = Order.parser.parse_args()
+
+        order = next(filter(lambda x: x['order_id'] == order_id, orders), None)
+        if order is None:
+            order = {
+                'order_id': order_id,
+                'name': data['name'],
+                'type': data['type'],
+                'price': data['price'],
+                'address': data['address']
+            }
+            orders.append(order), 201
+        else:
+            order.update(data), 200
+        return order
+
