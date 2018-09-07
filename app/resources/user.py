@@ -7,19 +7,19 @@ from app.models import User, is_blank
 
 class Signup(Resource):
     """
-    Resource for user registering a new user
-    Add Parser for required fields
+    SignUp new User
+    parse user details
     """
     parser = reqparse.RequestParser()
     parser.add_argument('username', required=True,
-                        help='Username cannot be blank', type=str)
+                        help='Please imput the username', type=str)
     parser.add_argument('email', required=True,
-                        help='Email cannot be blank', type=str)
+                        help='Please input the email', type=str)
     parser.add_argument('password', required=True,
-                        help='Password cannot be blank', type=str)
+                        help='Please imput the password', type=str)
 
     def post(self):
-        """ Method to register a user """
+        """ Registering new user """
         args = Signup.parser.parse_args()
         password = args.get('password')
         username = args.get('username')
@@ -54,7 +54,7 @@ class Signup(Resource):
 
 
 class Login(Resource):
-    """ Resource for user login """
+    """ User Log In """
     parser = reqparse.RequestParser()
     parser.add_argument('username', required=True,
                         help='Username cannot be blank', type=str)
@@ -62,7 +62,7 @@ class Login(Resource):
                         help='Password cannot be blank')
 
     def post(self):
-        """ Method for registered user to login """
+        """ Log In method """
         args = Login.parser.parse_args()
         username = args["username"]
         password = args["password"]
