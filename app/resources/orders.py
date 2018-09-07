@@ -42,3 +42,9 @@ class Order(Resource):
         help="Please fill out this field"
     )
 
+    """ GET a specific Order method """
+
+    def get(self, order_id):
+        order = next(filter(lambda x: x['order_id'] == order_id, orders), None)
+        return {'order': order}, 200 if order else 404
+
