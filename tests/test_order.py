@@ -63,20 +63,20 @@ class TestOrders(TestBase):
         """ Test to update order status """
         response = self.client.post(ADD_UPDATE_URL,
                                     data=json.dumps(dict(order_id=8,
-                                                         name="Sharon Ngina",
-                                                         type="Pizza",
-                                                         price=800,
-                                                         address="Changamwe"
+                                                         name="Sophie Naomi",
+                                                         type="Curry",
+                                                         price=900,
+                                                         address="Eastlands"
                                                          )), content_type='application/json')
         self.assertEqual(response.status_code, 201)
 
         response = self.client.put(MODIFY_URL,
                                    data=json.dumps(dict(order_id=8,
-                                                        name="Sharon Ngina",
-                                                        type="Pizza",
-                                                        price=500,
-                                                        address="Likoni"
-                                                        )), content_type=("application/json"))
+                                                       name="Jimmy",
+                                                         type="Curry",
+                                                         price=900,
+                                                         address="Eastlands"
+                                                         )), content_type='application/json')
         self.assertEqual(response.status_code, 200)
         result = json.loads(response.data.decode())
         print(result)
@@ -85,11 +85,11 @@ class TestOrders(TestBase):
         """ Test to delete an Order """
         response = self.client.delete(
             DELETE_URL, data=json.dumps(dict(order_id=2,
-                                             name="Sharon Ngina",
-                                             type="Pizza",
-                                             price=500,
-                                             address="Likoni"
-                                             )), content_type='application/json')
+                                             name="Sophie Naomi",
+                                                         type="Curry",
+                                                         price=900,
+                                                         address="Eastlands"
+                                                         )), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
 
