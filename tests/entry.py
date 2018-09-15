@@ -34,11 +34,11 @@ class EntryClass(unittest.TestCase):
             password='pass12345')
 
     def logged_in_user(self):
-        """ Create User """
+        """ Create New User """
         self.client.post(SIGNUP_URL,
                          data=json.dumps(self.user_data), content_type='application/json')
 
-        """ User should be able to login """
+        """ User Login """
         res = self.client.post(LOGIN_URL,
                                data=json.dumps(
                                    {'username': 'danny', 'password': 'test12345'}),
@@ -47,7 +47,6 @@ class EntryClass(unittest.TestCase):
         return res
 
     def tearDown(self):
-        """ Drop the DATABASE structure """
         db.drop()
 
 

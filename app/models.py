@@ -1,11 +1,10 @@
-# Data Structures to store 
+# Data Structures to store orders and user data
 
 from datetime import datetime
 from flask import current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 
-class DB():
-    """ This class  creates a data structure to store user data in place of a database"""
+class Order():
     def __init__(self):
         self.users = {}
         self.user_count = 0
@@ -13,20 +12,17 @@ class DB():
     def drop(self):
         self.__init__()
 
-""" An instance of the class """
-db = DB()
+
+db = Order()
 
 class Start():
-    """ Start class to be inherited by User Class"""
     def update(self, data):
-        # Validate keys before passing to data.
         for key in data:
             setattr(self, key, data[key])
         setattr(self, 'last_modified', datetime.utcnow().isoformat())
         return self.view()
 
 class User(Start):
-    """ This class defines the user data model """
     def __init__(self, username, password, email):
         self.id = None
         self.username = username
@@ -36,31 +32,25 @@ class User(Start):
         self.last_modified = datetime.utcnow().isoformat()
 
     def save(self):
-        """ Method for saving user registration details """
         setattr(self, 'id', db.user_count + 1)
         db.users.update({self.id: self})
         db.user_count += 1
         return self.view()
 
     def validate_password(self, password):
-        """ Method for validating user password """
         if check_password_hash(self.password, password):
             return True
         return False
 
-    def delete(self):
-        """ Method used for deleting a user """
-        del db.users[self.id]
-
-
     def view(self):
-        """ Method to jsonify object user to return a file in json format """
         keys = ['username', 'email', 'id']
         return {key: getattr(self, key) for key in keys}
 
+    def delete(self):
+        del db.users[self.id]
+
     @classmethod
     def get_user_by_email(cls, email):
-        """ email """
         for id_ in db.users:
             user = db.users.get(id_)
             if user.email == email:
@@ -69,17 +59,13 @@ class User(Start):
 
     @classmethod
     def get(cls, id):
-        """ Id """
         user = db.users.get(id)
         if not user:
-            return {'message': 'Invalid Logins.'}
+            return {'message': 'Invalid Login Credentials!'}
         return user
-
-
 
     @classmethod
     def get_user_by_username(cls, username):
-        """ Username """
         for id_ in db.users:
             user = db.users.get(id_)
             if user.username == username:
@@ -87,9 +73,8 @@ class User(Start):
         return None
 
 def is_blank(var):
-    '''function to check if any required field is blank and notifies user if its so'''
     if var.strip() == '':
-        return 'All fields are required'
+        return 'All fields are required. Do not leave any field blank!'
     return None
 
 
@@ -101,7 +86,7 @@ orders = [
         "name": "Vincent Muriuki",
         "type": "Chicken Curry",
         "price": 500.00,
-        "address": "Ngong"
+        "address": "Karen"
     },
 
     {
