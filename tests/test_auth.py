@@ -28,19 +28,19 @@ class TestAuth(EntryClass):
         result = json.loads(response2.data.decode())
         self.assertEqual(result["message"], "User already exists")
 
-    def test_len_of_pass(self):
-        """ Registration password should not be less than 8 characters """
-        response = self.client.post(SIGNUP_URL,
-                                    data=json.dumps(
-                                        {'username': 'faith', 'email': 'faith@mail.com', 'password': '123'}),
-                                    content_type='application/json')
+    # def test_len_of_pass(self):
+    #     """ Registration password should not be less than 8 characters """
+    #     response = self.client.post(SIGNUP_URL,
+    #                                 data=json.dumps(
+    #                                     {'username': 'faith', 'email': 'faith@mail.com', 'password': '123'}),
+    #                                 content_type='application/json')
 
-        self.assertEqual(response.status_code, 400)
+    #     self.assertEqual(response.status_code, 400)
 
-        result = json.loads(response.data.decode())
+    #     result = json.loads(response.data.decode())
 
-        self.assertEqual(result["message"],
-                         "Password should be atleast 8 characters")
+    #     self.assertEqual(result["message"],
+    #                      "Password should be atleast 8 characters")
 
 
     def test_username_validity(self):
