@@ -29,7 +29,7 @@ class TestOrders(TestBase):
         """ Test to place an order """
         response = self.client.post(ADD_URL,
                                     data=json.dumps(dict(order_id=7,
-                                                         customers_name="Sharon Ngina",
+                                                         name="Sharon Ngina",
                                                          type="Pizza",
                                                          price=800,
                                                          address="Changamwe"
@@ -63,7 +63,7 @@ class TestOrders(TestBase):
         """ Test to update order status """
         response = self.client.post(ADD_UPDATE_URL,
                                     data=json.dumps(dict(order_id=8,
-                                                         customers_name="Sophie Naomi",
+                                                         name="Sophie Naomi",
                                                          type="Curry",
                                                          price=900,
                                                          address="Eastlands"
@@ -72,7 +72,7 @@ class TestOrders(TestBase):
 
         response = self.client.put(MODIFY_URL,
                                    data=json.dumps(dict(order_id=8,
-                                                       customers_name="Jimmy",
+                                                       name="Jimmy",
                                                          type="Curry",
                                                          price=900,
                                                          address="Eastlands"
@@ -85,7 +85,7 @@ class TestOrders(TestBase):
         """ Test to delete an Order """
         response = self.client.delete(
             DELETE_URL, data=json.dumps(dict(order_id=2,
-                                             customers_name="Sophie Naomi",
+                                             name="Sophie Naomi",
                                                          type="Curry",
                                                          price=900,
                                                          address="Eastlands"

@@ -18,7 +18,7 @@ class Order(Resource):
 
     parser = reqparse.RequestParser()
     parser.add_argument(
-        'customer_name',
+        'name',
         type=str,
         required=True,
         help="Please fill out this field"
@@ -71,7 +71,7 @@ class Order(Resource):
 
         order = {
             'order_id': order_id,
-            'customer_name': data['customer_name'],
+            'name': data['name'],
             'type': data['type'],
             'price': data['price'],
             'address': data['address']
@@ -89,7 +89,7 @@ class Order(Resource):
         if order is None:
             order = {
                 'order_id': order_id,
-                'customer_name': data['customer_name'],
+                'name': data['name'],
                 'type': data['type'],
                 'price': data['price'],
                 'address': data['address']
