@@ -61,14 +61,10 @@ class Order(Resource):
     
 
     def post(self, order_id):
-        """ 
-        POST API endpoint 
-        """
+        """ POST API endpoint """
         if next(filter(lambda x: x['order_id'] == order_id, orders), None):
             return {'message': "The order '{}' already exists.".format(order_id)}, 400
-
         data = Order.parser.parse_args()
-
         order = {
             'order_id': order_id,
             'name': data['name'],
