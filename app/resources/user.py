@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Resource, reqparse
 import re
 
@@ -30,15 +30,15 @@ class Signup(Resource):
         username_format = re.compile(r"(^[A-Za-z]+$)")
 
         if not (re.match(username_format, username)):
-            return jsonify({'message': 'Invalid username'}), 400
+            return {'message': 'Invalid username'}, 400
         elif not (re.match(email_format, email)):
-            return jsonify({'message': 'Invalid email. Ensure email is of the form example@mail.com'}), 400
+            return {'message': 'Invalid email. Ensure email is of the form example@mail.com'}, 400
         if len(username) < 4:
-            return ({'message': 'Username should be atleast 4 characters'}), 400
+            return {'message': 'Username should be atleast 4 characters'}, 400
         if is_blank(password) or is_blank(username) or is_blank(email):
-            return jsonify({'message': 'All fields are required'}), 400
+            return {'message': 'All fields are required'}, 400
         if len(password) < 8:
-            return jsonify({'message': 'Password should be atleast 8 characters'}), 400
+            return {'message': 'Password should be atleast 8 characters'}, 400
 
         username_exists = User.get_user_by_username(username=args['username'])
         email_exists = User.get_user_by_email(email=args['email'])
@@ -50,7 +50,7 @@ class Signup(Resource):
                     email=args.get('email'), password=password)
         user = user.save()
 
-        return jsonify({'message': 'registration successful, now login', 'user': user}), 201
+        return {'message': 'registration successful, now login', 'user': user}, 201
 
 
 class Login(Resource):
@@ -67,11 +67,11 @@ class Login(Resource):
         username = args["username"]
         password = args["password"]
         if is_blank(username) or is_blank(password) == '':
-            return jsonify({'message': 'All fields are required'}), 400
+            return {'message': 'All fields are required'}, 400
 
         user = User.get_user_by_username(username)
         if not user:
             return {'message': 'User unavailable'}, 404
         if user.validate_password(password):
-            return jsonify({"message": "You are successfully logged in", 'user': user.view()}), 200
-        return jsonify({"message": "Username or password is wrong."}), 401
+            return {"message": "You are successfully logged in", 'user': user.view()}, 200
+        return {"message": "Username or password is wrong."}, 401
